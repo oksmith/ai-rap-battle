@@ -105,18 +105,10 @@ This project uses LangGraph to manage the flow of the rap battle. The main compo
 - `battle.py` routes: Handle API requests for creating and streaming battles
 - Frontend UI: Provides an interface for setting up and viewing battles
 
-To extend or modify the project:
-
-- Adjust prompts in `src/app/services/battlebot/prompts.py` to change the rap style
-- Modify the graph in `src/app/services/battlebot/graph.py` to change the battle flow
-- Update the models in `src/app/models/battle.py` for new features
-
-## License
-
-[MIT License](LICENSE)
-
-## Acknowledgments
-
-- This project was inspired by the [running-buddy](https://github.com/oksmith/running-buddy) project
-- Powered by OpenAI's language models
-- Built with FastAPI and LangGraph
+## Next Steps
+Ways to extend the project:
+* Audio Generation: Add text-to-speech to have the verses read aloud in character-appropriate voices(!)
+* Character Profiles: Allow access to the internet e.g. Wikipedia, to gather context about each rapper to improve the AI's understanding(!)
+* Voting System: Allow users to vote on who won each round or the overall battle(?)
+* Custom Themes: Allow users to specify themes or topics for the battle(?)
+* Multi-lingual Support: Enable battles in different languages(?)
