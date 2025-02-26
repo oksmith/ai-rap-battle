@@ -155,18 +155,34 @@ else {
 
         const verseContent = document.createElement('div');
         verseContent.className = 'verse-content';
+
+        // Apply animation and set content
         if (animate) {
+            // First, create the container with the right size but no content
+            verseElement.appendChild(verseHeader);
+            verseElement.appendChild(verseContent);
+            battleArena.appendChild(verseElement);
+
+            // Set the content and then add the animation class
+            verseContent.textContent = verse.content;
+
+            // Force a reflow before adding the animation class
+            void verseContent.offsetWidth;
+
+            // Now add the animation class
             verseContent.classList.add('typing-animation');
+        } else {
+            // For pre-loaded verses, just set the content normally
+            verseContent.textContent = verse.content;
+            verseElement.appendChild(verseHeader);
+            verseElement.appendChild(verseContent);
+            battleArena.appendChild(verseElement);
         }
-        verseContent.textContent = verse.content;
 
-        verseElement.appendChild(verseHeader);
-        verseElement.appendChild(verseContent);
-
-        battleArena.appendChild(verseElement);
         battleArena.scrollTop = battleArena.scrollHeight;
     }
 
+    // Start the battle stream
     // Start the battle stream
     async function startBattleStream() {
         try {
@@ -187,6 +203,10 @@ else {
             let currentVerseContent = '';
             let currentRapperName = '';
             let verseAdded = false;
+            let verseCount = 0; // Track how many verses we've added
+
+            // Add debug info
+            console.log("Starting battle stream...");
 
             while (true) {
                 const { value, done } = await reader.read();
@@ -196,40 +216,49 @@ else {
                 const text = decoder.decode(value);
                 const messages = text.split('\n').filter(line => line.trim());
 
+                console.log(`Received ${messages.length} messages from server`);
+
                 for (const message of messages) {
                     try {
                         const parsedResponse = JSON.parse(message);
+                        console.log("Parsed message:", parsedResponse);
 
-                        // Update loading text
+                        // Always update rapper and verse content when available
                         if (parsedResponse.rapper) {
                             loadingText.textContent = `${parsedResponse.rapper} is dropping bars...`;
-                            currentRapperName = parsedResponse.rapper;
+                            // If we have a new rapper and the previous verse is complete, reset verseAdded
+                            if (parsedResponse.rapper !== currentRapperName) {
+                                console.log(`New rapper detected: ${parsedResponse.rapper} (previous: ${currentRapperName})`);
+                                verseAdded = false;
+                                currentRapperName = parsedResponse.rapper;
+                            }
                         }
 
-                        // Update verse content
                         if (parsedResponse.verse) {
                             currentVerseContent = parsedResponse.verse;
                         }
 
-                        // If complete verse, add to UI
-                        if (parsedResponse.complete && !verseAdded) {
+                        // Check if this is a complete verse that we haven't added yet
+                        if (parsedResponse.complete === true && !verseAdded && currentRapperName && currentVerseContent) {
+                            console.log(`Adding complete verse from ${currentRapperName} (verse #${verseCount + 1})`);
+
                             const newVerse = {
                                 content: currentVerseContent,
                                 rapper: currentRapperName
                             };
 
                             addVerseToUI(newVerse, true);
+                            verseCount++;
 
                             // Update round information
                             currentRound.textContent = parsedResponse.round;
 
-                            // Reset for next verse
-                            currentVerseContent = '';
+                            // Mark this verse as added and reset content
                             verseAdded = true;
+                            currentVerseContent = '';
 
                             // Small delay before showing loading for next verse
                             await new Promise(resolve => setTimeout(resolve, 1000));
-                            verseAdded = false;
                         }
 
                         // Handle errors
@@ -243,6 +272,8 @@ else {
                     }
                 }
             }
+
+            console.log(`Battle complete. Total verses added: ${verseCount}`);
 
             // Battle is complete
             showBattleComplete();

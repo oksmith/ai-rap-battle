@@ -155,33 +155,41 @@ h1 {
 }
 
 /* Typing animation for verse content */
+.verse-content {
+    white-space: pre-line;
+    line-height: 1.6;
+    min-height: 120px;
+    /* Set a minimum height so the box doesn't change size */
+    min-width: 300px;
+    /* Set a minimum width too */
+    max-width: 90%;
+    /* And a maximum width */
+}
+
 .typing-animation {
-    display: inline-block;
-    overflow: hidden;
-    border-right: 3px solid transparent;
-    white-space: pre-wrap;
-    animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+    position: relative;
 }
 
-@keyframes typing {
+.typing-animation::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: inherit;
+    /* Removed the border-left that created the cursor */
+    animation: typewriter 3s steps(50, end) forwards;
+    /* Removed the blink animation */
+}
+
+@keyframes typewriter {
     from {
-        width: 0
+        left: 0;
     }
 
     to {
-        width: 100%
-    }
-}
-
-@keyframes blink-caret {
-
-    from,
-    to {
-        border-color: transparent
-    }
-
-    50% {
-        border-color: #FF1744
+        left: 100%;
     }
 }
 

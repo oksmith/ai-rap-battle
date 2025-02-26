@@ -1,5 +1,5 @@
 RAP_STYLE_INSTRUCTIONS = """When generating rap verses:
-- Each verse should be 8-12 lines
+- Each verse should be 4-6 lines
 - Always ensure verses rhyme with a strong rhythm
 - Use language, references, and slang that the character would authentically use
 - Make it witty and include clever wordplay
