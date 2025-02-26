@@ -57,9 +57,15 @@ if (!isBattlePage) {
             }
 
             const battleData = await response.json();
+            console.log('Battle created:', battleData);
 
             // Redirect to battle page with battle ID
-            window.location.href = `/battle-ui?battle_id=${battleData.id || 'new'}`;
+            const battleId = battleData.id;
+            if (!battleId) {
+                throw new Error('No battle ID returned from server');
+            }
+
+            window.location.href = `/battle-ui?battle_id=${battleId}`;
         } catch (error) {
             console.error('Error starting battle:', error);
             alert(`Failed to start battle: ${error.message}`);
@@ -72,8 +78,13 @@ else {
     const urlParams = new URLSearchParams(window.location.search);
     const battleId = urlParams.get('battle_id');
 
+    console.log("Battle ID from URL:", battleId);
+
     if (!battleId) {
+        console.error("No battle ID found in URL");
+        alert("No battle ID provided. Redirecting to home page.");
         window.location.href = '/';
+        throw new Error("No battle ID found");  // Stop execution
     }
 
     // Get elements

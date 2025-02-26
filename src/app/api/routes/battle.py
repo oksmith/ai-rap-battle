@@ -1,6 +1,5 @@
 import json
 import logging
-import uuid
 from typing import Dict, Any
 
 from fastapi import APIRouter, HTTPException
@@ -8,6 +7,7 @@ from fastapi.responses import StreamingResponse
 
 from src.app.models.battle import BattleRequest, BattleResponse, StreamingVerseResponse
 from src.app.services.battlebot.graph import get_battle_graph
+from src.app.services.battlebot.utils import generate_battle_id
 from src.app.utils.logger import setup_logger
 
 logger = setup_logger(name="battle_app", level=logging.INFO, log_file="battle.log")
@@ -25,7 +25,7 @@ async def start_battle(request: BattleRequest):
     Returns basic battle info with a battle_id.
     """
     try:
-        battle_id = str(uuid.uuid4())
+        battle_id = generate_battle_id()
         
         # Store basic battle info
         active_battles[battle_id] = {
@@ -43,6 +43,7 @@ async def start_battle(request: BattleRequest):
             complete=False,
             current_round=0,
             total_rounds=request.rounds,
+            id=battle_id,
         )
         
     except Exception as e:
@@ -55,10 +56,15 @@ async def get_battle(battle_id: str):
     """
     Get the current state of a battle.
     """
+    logger.info(f"Fetching battle with ID: {battle_id}")
+    logger.info(f"Active battles: {list(active_battles.keys())}")
+    
     if battle_id not in active_battles:
+        logger.error(f"Battle not found: {battle_id}")
         raise HTTPException(status_code=404, detail="Battle not found")
     
     battle_info = active_battles[battle_id]
+    logger.info(f"Found battle info: {battle_info}")
     
     return BattleResponse(
         rapper_a=battle_info["rapper_a"],
@@ -66,7 +72,8 @@ async def get_battle(battle_id: str):
         verses=battle_info["verses"],
         complete=battle_info["current_round"] >= battle_info["total_rounds"],
         current_round=battle_info["current_round"],
-        total_rounds=battle_info["total_rounds"]
+        total_rounds=battle_info["total_rounds"],
+        id=battle_id
     )
 
 
@@ -76,11 +83,17 @@ async def stream_battle(battle_id: str):
     Stream a rap battle verse by verse.
     """
     try:
-        # Generate a new battle ID if not provided
+        logger.info(f"Starting battle stream for ID: {battle_id}")
+        logger.info(f"Active battles: {list(active_battles.keys())}")
+        
+        # Check if battle exists
         if battle_id not in active_battles:
+            logger.error(f"Battle not found for streaming: {battle_id}")
             raise HTTPException(status_code=404, detail="Battle not found")
         
         battle_info = active_battles[battle_id]
+        logger.info(f"Found battle info for streaming: {battle_info}")
+        
         rapper_a = battle_info["rapper_a"]
         rapper_b = battle_info["rapper_b"]
         total_rounds = battle_info["total_rounds"]
@@ -108,7 +121,8 @@ async def stream_battle(battle_id: str):
                                     verse=current_verse_content,
                                     rapper=current_rapper,
                                     complete=False,
-                                    round=battle_info["current_round"]
+                                    round=battle_info["current_round"],
+                                    battle_id=battle_id
                                 )
                                 yield json.dumps(response.model_dump()) + "\n"
                                 
@@ -129,7 +143,8 @@ async def stream_battle(battle_id: str):
                                     verse=current_verse_content,
                                     rapper=current_rapper,
                                     complete=True,
-                                    round=battle_info["current_round"]
+                                    round=battle_info["current_round"],
+                                    battle_id=battle_id
                                 )
                                 yield json.dumps(response.model_dump()) + "\n"
                                 

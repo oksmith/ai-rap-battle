@@ -34,7 +34,12 @@
         const urlParams = new URLSearchParams(window.location.search);
         const battleId = urlParams.get('battle_id');
 
+        // Log for debugging
+        console.log("Battle ID from URL:", battleId);
+
         if (!battleId) {
+            console.error("No battle ID found in URL");
+            alert("No battle ID provided. Redirecting to home page.");
             window.location.href = '/';
         }
 

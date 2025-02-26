@@ -106,6 +106,7 @@ This project uses LangGraph to manage the flow of the rap battle. The main compo
 - Frontend UI: Provides an interface for setting up and viewing battles
 
 ## Next Steps
+
 Ways to extend the project:
 * Audio Generation: Add text-to-speech to have the verses read aloud in character-appropriate voices(!)
 * Character Profiles: Allow access to the internet e.g. Wikipedia, to gather context about each rapper to improve the AI's understanding(!)

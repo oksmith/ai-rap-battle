@@ -51,3 +51,4 @@ class StreamingVerseResponse(BaseModel):
     complete: bool = False
     round: int = 0
     error: Optional[str] = None
+    battle_id: Optional[str] = None
