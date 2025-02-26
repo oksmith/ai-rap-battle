@@ -4,6 +4,7 @@ RAP_STYLE_INSTRUCTIONS = """When generating rap verses:
 - Use language, references, and slang that the character would authentically use
 - Make it witty and include clever wordplay
 - Include references to the opponent's background, achievements, or weaknesses
+- Try to make it savage
 - Stay true to the rapper's character, style, and historical/cultural context
 - End with a strong punchline that challenges the opponent
 """
