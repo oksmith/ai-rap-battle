@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Rap Battle</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div id="battle-box">
+        <h1>AI Rap Battle</h1>
+        <div id="battle-info">
+            <h2><span id="rapper-a-name">Loading...</span> vs <span id="rapper-b-name">Loading...</span></h2>
+            <div id="round-info">Round <span id="current-round">0</span> of <span id="total-rounds">5</span></div>
+        </div>
+
+        <div id="battle-arena">
+            <!-- Verses will be dynamically added here -->
+        </div>
+
+        <div id="battle-controls">
+            <button id="start-button" class="battle-btn">Start Battle</button>
+            <button id="new-battle-button" class="battle-btn" style="display: none;">New Battle</button>
+        </div>
+
+        <div id="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <p id="loading-text">Generating verse...</p>
+        </div>
+    </div>
+
+    <script>
+        // Get battle_id from URL query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const battleId = urlParams.get('battle_id');
+
+        if (!battleId) {
+            window.location.href = '/';
+        }
+
+        // The rest of the battle UI JavaScript will be in scripts.js
+    </script>
+    <script src="/static/scripts.js"></script>
+</body>
+
+</html>

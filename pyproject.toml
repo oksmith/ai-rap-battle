@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "ai-rap-battle"
+version = "0.1.0"
+description = "An AI-powered rap battle app that pits famous figures against each other"
+authors = ["oksmith <ollie.smith@ravelin.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langchain = "^0.3.14"
+langchain-community = "^0.3.14"
+fastapi = "^0.115.6"
+uvicorn = "^0.34.0"
+langchain-openai = "^0.3.0"
+langgraph = "^0.2.62"
+python-dotenv = "^1.0.1"
+pydantic = "^2.7.1"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

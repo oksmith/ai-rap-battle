@@ -1,1 +1,122 @@
-# ai-rap-battle
+# AI Rap Battle
+
+An AI-powered application that creates rap battles between famous historical figures, celebrities, or fictional characters. Leverage the power of AI to generate entertaining, rhyming rap verses that capture each character's unique style and personality.
+
+## Features
+
+- Create rap battles between any two famous figures
+- Watch as each rapper takes turns delivering AI-generated verses
+- Verses maintain the unique voice and style of each character
+- Content is relevant to each character's background, achievements, and personality
+- Configure up to 10 rounds of back-and-forth rapping
+- Real-time streaming of verse generation
+
+## Project Structure
+
+```
+ai-rap-battle/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── routes/
+│   │   │       └── battle.py
+│   │   ├── models/
+│   │   │   └── battle.py
+│   │   ├── services/
+│   │   │   └── battlebot/
+│   │   │       ├── graph.py
+│   │   │       ├── prompts.py
+│   │   │       └── utils.py
+│   │   ├── static/
+│   │   │   ├── index.html
+│   │   │   ├── battle-ui.html
+│   │   │   ├── scripts.js
+│   │   │   └── styles.css
+│   │   ├── utils/
+│   │   │   └── logger.py
+│   │   └── main.py
+├── .env.example
+├── .gitignore
+└── pyproject.toml
+```
+
+## Technology Stack
+
+- **Backend**: FastAPI
+- **AI Framework**: LangGraph for orchestrating the rap battle flow
+- **Language Model**: OpenAI GPT models via LangChain
+- **Frontend**: HTML, CSS, and vanilla JavaScript
+
+## Setup Instructions
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/oksmith/ai-rap-battle.git
+   cd ai-rap-battle
+   ```
+
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies with Poetry:
+   ```bash
+   pip install poetry
+   poetry install
+   ```
+
+4. Set up environment variables:
+   - Copy `.env.example` to `.env`
+   - Add your OpenAI API key to the `.env` file
+
+5. Run the application:
+   ```bash
+   poetry run uvicorn src.app.main:app --reload
+   ```
+
+6. Open your browser and navigate to [http://localhost:8000](http://localhost:8000)
+
+## Usage
+
+1. On the main page, enter the names of two famous figures you want to battle
+2. Select the number of rounds (1-10)
+3. Click "Start Battle" to begin
+4. Watch as the AI generates rap verses for each character in turn
+5. When the battle is complete, you can start a new battle
+
+## Example Matchups
+
+- Albert Einstein vs. Stephen Hawking
+- William Shakespeare vs. Dr. Seuss
+- Nikola Tesla vs. Thomas Edison
+- Aristotle vs. Friedrich Nietzsche
+- Leonardo da Vinci vs. Pablo Picasso
+- Marie Curie vs. Ada Lovelace
+- Cleopatra vs. Queen Elizabeth I
+- Abraham Lincoln vs. Winston Churchill
+
+## Development
+
+This project uses LangGraph to manage the flow of the rap battle. The main components are:
+
+- `BattleGraph`: Manages the state and flow of the rap battle
+- `battle.py` routes: Handle API requests for creating and streaming battles
+- Frontend UI: Provides an interface for setting up and viewing battles
+
+To extend or modify the project:
+
+- Adjust prompts in `src/app/services/battlebot/prompts.py` to change the rap style
+- Modify the graph in `src/app/services/battlebot/graph.py` to change the battle flow
+- Update the models in `src/app/models/battle.py` for new features
+
+## License
+
+[MIT License](LICENSE)
+
+## Acknowledgments
+
+- This project was inspired by the [running-buddy](https://github.com/oksmith/running-buddy) project
+- Powered by OpenAI's language models
+- Built with FastAPI and LangGraph

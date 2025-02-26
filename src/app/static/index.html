@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Rap Battle</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .battle-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .battle-form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .battle-form input {
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .battle-form select {
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .start-battle-btn {
+            background-color: #FF1744;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .start-battle-btn:hover {
+            background-color: #D50000;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 3rem;
+            text-transform: uppercase;
+        }
+
+        .suggestions {
+            margin-top: 2rem;
+            color: #666;
+        }
+
+        .examples {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .example {
+            background-color: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .example:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>AI Rap Battle</h1>
+    <div class="form-container">
+        <form id="battle-form" class="battle-form" action="javascript:void(0);">
+            <div>
+                <label for="rapperA">Rapper A:</label>
+                <input type="text" id="rapperA" name="rapperA" placeholder="e.g., Albert Einstein" required>
+            </div>
+            <div>
+                <label for="rapperB">Rapper B:</label>
+                <input type="text" id="rapperB" name="rapperB" placeholder="e.g., William Shakespeare" required>
+            </div>
+            <div>
+                <label for="rounds">Number of Rounds:</label>
+                <select id="rounds" name="rounds">
+                    <option value="1">1 Round</option>
+                    <option value="2">2 Rounds</option>
+                    <option value="3">3 Rounds</option>
+                    <option value="4">4 Rounds</option>
+                    <option value="5" selected>5 Rounds</option>
+                    <option value="6">6 Rounds</option>
+                    <option value="7">7 Rounds</option>
+                    <option value="8">8 Rounds</option>
+                    <option value="9">9 Rounds</option>
+                    <option value="10">10 Rounds</option>
+                </select>
+            </div>
+            <button type="submit" class="start-battle-btn">Start Battle</button>
+        </form>
+
+        <div class="suggestions">
+            <p>Try these epic matchups:</p>
+            <div class="examples">
+                <div class="example" data-rapper-a="Albert Einstein" data-rapper-b="Stephen Hawking">Einstein vs Hawking
+                </div>
+                <div class="example" data-rapper-a="William Shakespeare" data-rapper-b="Dr. Seuss">Shakespeare vs Dr.
+                    Seuss</div>
+                <div class="example" data-rapper-a="Nikola Tesla" data-rapper-b="Thomas Edison">Tesla vs Edison</div>
+                <div class="example" data-rapper-a="Aristotle" data-rapper-b="Friedrich Nietzsche">Aristotle vs
+                    Nietzsche</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/scripts.js"></script>
+</body>
+
+</html>
