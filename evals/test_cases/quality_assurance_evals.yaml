@@ -1,0 +1,49 @@
+# quality_assurance_evals.yaml
+evals:
+  - id: "rhyme_check"
+    name: "Check rhyming quality in verses"
+    description: "Ensures verses have proper rhyme schemes"
+    test_cases:
+      - input:
+          rapper_a: "Eminem"
+          rapper_b: "Jay-Z"
+          rounds: 3
+        validation:
+          method: "rhyme_score"
+          threshold: 0.7
+          explanation: "Verses should have strong rhyming patterns"
+
+  - id: "character_authenticity_check"
+    name: "Check character authenticity"
+    description: "Ensures verses match the character's known style, vocabulary, and background"
+    test_cases:
+      - input:
+          rapper: "Albert Einstein"
+          verse_count: 3
+        validation:
+          method: "authenticity_score"
+          threshold: 0.75
+          reference_keywords: ["physics", "relativity", "science", "theory"]
+          explanation: "Einstein's verses should reference his scientific background"
+      
+      - input:
+          rapper: "William Shakespeare"
+          verse_count: 3
+        validation:
+          method: "authenticity_score"
+          threshold: 0.75
+          reference_keywords: ["theatre", "plays", "sonnets", "thee", "thou"]
+          explanation: "Shakespeare's verses should include his linguistic style"
+
+  - id: "verse_variety_check"
+    name: "Check verse variety"
+    description: "Ensures verses are not repetitive across rounds"
+    test_cases:
+      - input:
+          rapper_a: "Mozart"
+          rapper_b: "Beethoven"
+          rounds: 5
+        validation:
+          method: "variety_score"
+          threshold: 0.6
+          explanation: "Successive verses should not repeat the same themes or insults"
